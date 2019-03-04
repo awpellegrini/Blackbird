@@ -18,7 +18,6 @@
     <title>Blackbird | Login</title>
   </head>
   <body class="page-login">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
@@ -50,18 +49,23 @@
         </form>
 
     </div>
-    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+                
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
     <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDH7v6Ympqpat_O9FrgfliqIgPtNF5WcO4",
-                authDomain: "born2code-test1.firebaseapp.com",
-                databaseURL: "https://born2code-test1.firebaseio.com",
-                projectId: "born2code-test1",
-                storageBucket: "born2code-test1.appspot.com",
-                messagingSenderId: "117280734902"
-            };
-            firebase.initializeApp(config);
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyATq6yp36sRF0T1PunHdMVXLYU9Y_m-mQw",
+        authDomain: "blackbird-4d2a1.firebaseapp.com",
+        databaseURL: "https://blackbird-4d2a1.firebaseio.com",
+        projectId: "blackbird-4d2a1",
+        storageBucket: "blackbird-4d2a1.appspot.com",
+        messagingSenderId: "818782685612"
+    };
+    const firebase = require("firebase");
+    // Required for side-effects
+    require("firebase/firestore");
+    
+    firebase.initializeApp(config);
         
             // Get a reference to the database service
             var db = firebase.firestore();
