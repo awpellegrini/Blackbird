@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="" type="text/css">
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Sarabun:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <title>Blackbird | Login</title>
+  </head>
+  <body class="page-login">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <div class="container-login">
+
+        <div class="header-login">
+            <img class="ipad logo-welcome" src="images/welcome_logo_w.svg">
+            <img class="mobile logo-welcome" src="images/logo_welcome.svg">
+        </div>
+
+        <!-- onsubmit dentro form intercetta il submit e permette di fare l'hack dello stesso -->
+        <form onsubmit="mySubmit()" method="post" action="http://jsex.wink.by/post.php" id="login" class="login">
+            <div class="form-item">
+                <label for="InputEmail">Company Email Address</label>
+                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="you@company.com">
+            </div>
+            <div class="form-item">
+                <label for="InputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Your Password">
+            </div>
+            <div class="form-item form-check">
+                <input type="checkbox" name="checkbox" class="form-check-input" id="remember-me">
+                <label class="form-check-label" for="remember-me">Remember Me</label>
+            </div>
+            <div class="form-item form-forgot">
+                <a id="forgot-password" href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDH7v6Ympqpat_O9FrgfliqIgPtNF5WcO4",
+                authDomain: "born2code-test1.firebaseapp.com",
+                databaseURL: "https://born2code-test1.firebaseio.com",
+                projectId: "born2code-test1",
+                storageBucket: "born2code-test1.appspot.com",
+                messagingSenderId: "117280734902"
+            };
+            firebase.initializeApp(config);
+        
+            // Get a reference to the database service
+            var db = firebase.firestore();
+        
+            db.collection("users").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, doc.data());
+                    console.log(doc.data().username);
+                    console.log(doc.data().hashPassword);
+                });
+            });
+ 
+        function mySubmit() {
+            // prendo il value del campo password
+            let inputPassword = document.querySelector("#InputPassword");
+            console.log(inputPassword.value)
+            // faccio l'encrypt di tutto questo
+            sha1(inputPassword.value)
+            let hash = sha1.create();
+            hash.update(inputPassword.value)
+            let passwordHash = hash.hex()
+            // cambio il value del campo password con quello criptato
+            inputPassword.value = passwordHash
+            console.log(inputPassword.value)
+        } 
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+        
+        firebase.auth().getRedirectResult().then(function(result) {
+            if (result.credential) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // ...
+            } else firebase.auth().signInWithRedirect(provider)
+            // The signed-in user info.
+            var user = result.user;
+            }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+        
+    </script>
+  </body>
+</html>
