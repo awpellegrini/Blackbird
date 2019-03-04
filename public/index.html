@@ -1,15 +1,117 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Test</title>
-  </head>
 
-  <body> 
-    <div>Antonio</div>
-    <div>Edoardo</div>
-    <div>Chiara</div>
-    <div>Lorenzo</div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="" type="text/css">
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Sarabun:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <title>Blackbird | Login</title>
+  </head>
+  <body class="page-login">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <div class="container-login">
+
+        <div class="header-login">
+            <img class="ipad logo-welcome" src="images/welcome_logo_w.svg">
+            <img class="mobile logo-welcome" src="images/logo_welcome.svg">
+        </div>
+
+        <!-- onsubmit dentro form intercetta il submit e permette di fare l'hack dello stesso -->
+        <form onsubmit="mySubmit()" method="post" action="http://jsex.wink.by/post.php" id="login" class="login">
+            <div class="form-item">
+                <label for="InputEmail">Company Email Address</label>
+                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="you@company.com">
+            </div>
+            <div class="form-item">
+                <label for="InputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Your Password">
+            </div>
+            <div class="form-item form-check">
+                <input type="checkbox" name="checkbox" class="form-check-input" id="remember-me">
+                <label class="form-check-label" for="remember-me">Remember Me</label>
+            </div>
+            <div class="form-item form-forgot">
+                <a id="forgot-password" href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+
+    </div>
+                
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyATq6yp36sRF0T1PunHdMVXLYU9Y_m-mQw",
+        authDomain: "blackbird-4d2a1.firebaseapp.com",
+        databaseURL: "https://blackbird-4d2a1.firebaseio.com",
+        projectId: "blackbird-4d2a1",
+        storageBucket: "blackbird-4d2a1.appspot.com",
+        messagingSenderId: "818782685612"
+    };
+    const firebase = require("firebase");
+    // Required for side-effects
+    require("firebase/firestore");
+    
+    firebase.initializeApp(config);
+        
+            // Get a reference to the database service
+            var db = firebase.firestore();
+        
+            db.collection("users").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, doc.data());
+                    console.log(doc.data().username);
+                    console.log(doc.data().hashPassword);
+                });
+            });
+ 
+        function mySubmit() {
+            // prendo il value del campo password
+            let inputPassword = document.querySelector("#InputPassword");
+            console.log(inputPassword.value)
+            // faccio l'encrypt di tutto questo
+            sha1(inputPassword.value)
+            let hash = sha1.create();
+            hash.update(inputPassword.value)
+            let passwordHash = hash.hex()
+            // cambio il value del campo password con quello criptato
+            inputPassword.value = passwordHash
+            console.log(inputPassword.value)
+        } 
+
+        function checkIfUserExist() {
+            var passHash = mySubmit();
+            console.log(passHash)
+            let trovato = 0;
+            db.collection("users").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if((inputEmail.value == doc.data().username) && (passHash == doc.data().hashPassword)) {
+                        send()
+                        trovato++
+                    }
+                });
+                if (trovato == 0) alert('utente non riconosciuto');
+            });
+        }
+
+        function send() {
+            var passHash = mySubmit();
+            alert('SIIIIIIIIIIIIIIIIIII');
+        } 
+        
+    </script>
   </body>
 </html>
