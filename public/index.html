@@ -95,7 +95,7 @@
             let trovato = 0;
             db.collection("users").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    if((inputEmail.value == doc.data().username) && (passHash == doc.data().hashPassword)) {
+                    if((inputEmail.value == doc.data().email) && (passHash == doc.data().password)) {
                         send()
                         trovato++
                     }
