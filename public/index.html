@@ -68,9 +68,9 @@
         
             db.collection("users").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.id, doc.data());
-                    console.log(doc.data().username);
-                    console.log(doc.data().hashPassword);
+                    // console.log(doc.id, doc.data());
+                    // console.log(doc.data().username);
+                    // console.log(doc.data().hashPassword);
                 });
             });
  
@@ -78,12 +78,12 @@
 
         function mySubmit() {
             let inputPassword = document.querySelector("#InputPassword");
-            console.log(inputPassword.value)
+            // console.log(inputPassword.value)
             sha1(inputPassword.value)
             let hash = sha1.create();
-            console.log(hash)
+            // console.log(hash)
             hash.update(inputPassword.value)
-            console.log(hash)
+            // console.log(hash)
             let passwordHash = hash.hex()
             console.log(passwordHash);
             return passwordHash;
@@ -91,7 +91,7 @@
 
         function checkIfUserExist() {
             var passHash = mySubmit();
-            console.log(passHash)
+            // console.log(passHash)
             let trovato = 0;
             db.collection("users").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
@@ -109,5 +109,11 @@
             alert('SIIIIIIIIIIIIIIIIIII');
         }   
     </script> 
+
+  <script>
+  var docRef = db.collection("convoList").doc('singleConvo01').collection('messages')
+  console.log(docRef)
+
+  </script>
   </body>
 </html>
