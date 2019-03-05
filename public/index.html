@@ -84,6 +84,7 @@
             });
  
         let inputEmail = document.querySelector("#InputEmail");
+        let inputPassword = document.querySelector("#InputPassword");
         // Get the modal
         let modal = document.getElementById('myModal');
         let modalContent = document.getElementById('modal-text');
@@ -91,7 +92,6 @@
         let span = document.getElementsByClassName("close")[0];
 
         function mySubmit() {
-            let inputPassword = document.querySelector("#InputPassword");
             console.log(inputPassword.value)
             sha1(inputPassword.value)
             let hash = sha1.create();
