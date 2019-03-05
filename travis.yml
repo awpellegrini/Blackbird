@@ -1,9 +1,0 @@
-language: node_js
-node_js: 8
-
-before_script:
-    -npm install firebase-tools -g
-    -cd functions && npm install
-
-script:
-    -firebase deploy --token "1/LC3C3_ZqD2PwQ5Q1Y7odRtaBnr1iCBewzIQ_GKeiafI"
