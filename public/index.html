@@ -29,23 +29,32 @@
         </div>
 
         <form id="login" class="login">
-          <div class="form-item">
-              <label for="InputEmail">Company Email Address</label>
-              <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="you@company.com">
-          </div>
-          <div class="form-item">
-              <label for="InputPassword">Password</label>
-              <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Your Password">
-          </div>
-          <div class="form-item form-check">
-              <input type="checkbox" name="checkbox" class="form-check-input" id="remember-me">
-              <label class="form-check-label" for="remember-me">Remember Me</label>
-          </div>
-          <div class="form-item form-forgot">
-              <a id="forgot-password" href="forgot-password.html">Forgot Password?</a>
-          </div>
-          <input type="button" class="btn btn-primary" value="Login" onclick="checkIfUserExist()">
-      </form>
+            <div class="form-item">
+                <label for="InputEmail">Company Email Address</label>
+                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="you@company.com" onfocusin="simpleBorder(this)">
+            </div>
+            <div class="form-item">
+                <label for="InputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Your Password" onfocusin="simpleBorder(this)">
+            </div>
+            <div class="form-item form-check">
+                <input type="checkbox" name="checkbox" class="form-check-input" id="remember-me">
+                <label class="form-check-label" for="remember-me">Remember Me</label>
+            </div>
+            <div class="form-item form-forgot">
+                <a id="forgot-password" href="forgot-password.html">Forgot Password?</a>
+            </div>
+            <input type="button" class="btn btn-primary" value="Login" onclick="checkIfUserExist()">
+        </form>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modal-text"></div>
+            </div>
+        </div>
 
     </div>
                 
@@ -75,9 +84,14 @@
             });
  
         let inputEmail = document.querySelector("#InputEmail");
+        let inputPassword = document.querySelector("#InputPassword");
+        // Get the modal
+        let modal = document.getElementById('myModal');
+        let modalContent = document.getElementById('modal-text');
+        // Get the <span> element that closes the modal
+        let span = document.getElementsByClassName("close")[0];
 
         function mySubmit() {
-            let inputPassword = document.querySelector("#InputPassword");
             console.log(inputPassword.value)
             sha1(inputPassword.value)
             let hash = sha1.create();
@@ -98,16 +112,43 @@
                     if((inputEmail.value == doc.data().email) && (passHash == doc.data().password)) {
                         send()
                         trovato++
+                    } 
+                    if (inputEmail.value == '' || inputPassword == '') {
+                        modal.style.display = "flex"
+                        modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
                     }
                 });
-                if (trovato == 0) alert('utente non riconosciuto');
+                if (trovato == 0) {
+                    modal.style.display = "flex"
+                    modalContent.innerHTML = '<div class="alert-title">Invalid email or password</div><div class="alert-text">Please reinsert both carefully</div>'
+                    inputEmail.style.borderColor = "var(--red)"
+                    inputPassword.style.borderColor = "var(--red)"
+                }
             });
         }
 
         function send() {
             var passHash = mySubmit();
-            alert('SIIIIIIIIIIIIIIIIIII');
+            window.location.href = "chats.html";
         }   
+
+        function simpleBorder(input) {
+            input.style.borderColor = "var(--light-grey)"
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
     </script> 
   </body>
 </html>
