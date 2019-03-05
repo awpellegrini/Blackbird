@@ -14,6 +14,10 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Sarabun:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+    
+    <!-- JS -->
+    <script src="main.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
 
     <title>Blackbird | Login</title>
   </head>
@@ -57,98 +61,5 @@
         </div>
 
     </div>
-                
-    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-    <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyATq6yp36sRF0T1PunHdMVXLYU9Y_m-mQw",
-        authDomain: "blackbird-4d2a1.firebaseapp.com",
-        databaseURL: "https://blackbird-4d2a1.firebaseio.com",
-        projectId: "blackbird-4d2a1",
-        storageBucket: "blackbird-4d2a1.appspot.com",
-        messagingSenderId: "818782685612"
-    };
-    
-    firebase.initializeApp(config);
-        
-            // Get a reference to the database service
-            var db = firebase.firestore();
-        
-            db.collection("users").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, doc.data());
-                    console.log(doc.data().username);
-                    console.log(doc.data().hashPassword);
-                });
-            });
- 
-        let inputEmail = document.querySelector("#InputEmail");
-        let inputPassword = document.querySelector("#InputPassword");
-        // Get the modal
-        let modal = document.getElementById('myModal');
-        let modalContent = document.getElementById('modal-text');
-        // Get the <span> element that closes the modal
-        let span = document.getElementsByClassName("close")[0];
-
-        function mySubmit() {
-            console.log(inputPassword.value)
-            sha1(inputPassword.value)
-            let hash = sha1.create();
-            console.log(hash)
-            hash.update(inputPassword.value)
-            console.log(hash)
-            let passwordHash = hash.hex()
-            console.log(passwordHash);
-            return passwordHash;
-        } 
-
-        function checkIfUserExist() {
-            var passHash = mySubmit();
-            console.log(passHash)
-            let trovato = 0;
-            db.collection("users").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if((inputEmail.value == doc.data().email) && (passHash == doc.data().password)) {
-                        send()
-                        trovato++
-                    } 
-                    if (inputEmail.value == '' || inputPassword == '') {
-                        modal.style.display = "flex"
-                        modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
-                    }
-                });
-                if (trovato == 0) {
-                    modal.style.display = "flex"
-                    modalContent.innerHTML = '<div class="alert-title">Invalid email or password</div><div class="alert-text">Please reinsert both carefully</div>'
-                    inputEmail.style.borderColor = "var(--red)"
-                    inputPassword.style.borderColor = "var(--red)"
-                }
-            });
-        }
-
-        function send() {
-            var passHash = mySubmit();
-            window.location.href = "chats.html";
-        }   
-
-        function simpleBorder(input) {
-            input.style.borderColor = "var(--light-grey)"
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-
-    </script> 
   </body>
 </html>
