@@ -114,14 +114,15 @@
                         trovato++
                     } 
                     if ((inputEmail.value == '') || (passHash == '')) {
-                        modal.style.display = "block"
+                        modal.style.display = "flex"
                         modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
                     }
                 });
                 if (trovato == 0) {
-                    modal.style.display = "block"
-                    modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
-                    inputEmail.style.border = "red"
+                    modal.style.display = "flex"
+                    modalContent.innerHTML = '<div class="alert-title">Invalid email or password</div><div class="alert-text">Please reinsert both carefully</div>'
+                    inputEmail.style.borderColor = "var(--red)"
+                    inputPassword.style.borderColor = "var(--red)"
                 }
             });
         }
