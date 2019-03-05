@@ -922,6 +922,16 @@ button{
     position: relative;
     text-align: center;
   }
+
+  .modal-content .alert-title {
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--dark-grey);
+}
+.modal-content .alert-text {
+    margin-top: 3px;
+    color: var(--dark-grey);
+}
   
   /* The Close Button */
   .close {
