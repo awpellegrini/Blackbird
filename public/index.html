@@ -52,7 +52,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <div class="modal-text"></div>
+                <div id="modal-text"></div>
             </div>
         </div>
 
@@ -86,6 +86,7 @@
         let inputEmail = document.querySelector("#InputEmail");
         // Get the modal
         let modal = document.getElementById('myModal');
+        let modalContent = document.getElementById('modal-text');
         // Get the <span> element that closes the modal
         let span = document.getElementsByClassName("close")[0];
 
@@ -114,12 +115,12 @@
                     } 
                     if ((inputEmail.value == '') || (passHash == '')) {
                         modal.style.display = "block"
-                        modal.innerHTML = '<div class="alert-title">Please fill both fields</div>'
+                        modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
                     }
                 });
                 if (trovato == 0) {
                     modal.style.display = "block"
-                    modal.innerHTML = '<div class="alert-title">Please fill both fields</div>'
+                    modalContent.innerHTML = '<div class="alert-title">Please fill both fields</div>'
                     inputEmail.style.border = "red"
                 }
             });
