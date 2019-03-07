@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="" type="text/css">
 
+    <!-- JS -->
+    <script src="main.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Sarabun:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
 
-    <title>PROVA</title>
+    <title>Blackbird | Messages</title>
   </head>
     <body>
         <!-- Megacontainer -->
@@ -121,53 +125,11 @@
                     </div>
                 </div>
                 <div class="single-chat" id="single-chat">
-                    <div class="message message-received">
-                        <div class="box-message">
-                            <div class="message-text">
-                                I’ve been working on this wireframing template for UI designers. It’s going to be wicked awesome.
-                            </div>
-                            <div class="message-time">11:02</div>
-                        </div>
-                    </div>
-                    <div class="message message-sent">
-                        <div class="message-text">
-                            Skype?                  
-                        </div>
-                        <div class="message-time">11:01</div>
-                    </div>
-                    <div class="message message-sent">
-                        <div class="message-text">
-                            WTF?                  
-                        </div>
-                        <div class="message-time">11:01</div>
-                    </div>
-                    <div class="message message-sent">
-                        <div class="message-text">
-                            Where r u?                  
-                        </div>
-                        <div class="message-time">11:01</div>
-                    </div>
-                    <div class="message message-received">
-                        <div class="box-message">
-                            <div class="message-img">
-                                <a href="images/ibis.jpg"><img src="images/ibis.jpg"/></a>
-                            </div>
-                            <div class="message-time">11:02</div>
-                        </div>
-                    </div>
-                    <div class="message message-sent">
-                        <div class="box-message">
-                            <div class="message-text">
-                                I’ve been working on this wireframing template for UI designers. It’s going to be wicked awesome.
-                            </div>
-                            <div class="message-time">11:02</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="input-keyboard">
                     <input type="textarea" id="input-keyboard" name="input-keyboard" placeholder="Start typing.." value="">
                     <img id="attachment-icon" src="images/attachment.svg"/>                    
-                    <img id="send-icon" src="images/send.svg"/>
+                    <img onclick="invia()" id="send-icon" src="images/send.svg"/>
                 </div>
             </div><!--fine conversation-container-->
 
