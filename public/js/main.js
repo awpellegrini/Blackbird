@@ -9,6 +9,8 @@ var config = {
   };
   firebase.initializeApp(config);
 
+  let user = "antoniopellegrini"
+
       // Get a reference to the database service
       var db = firebase.firestore();
         
@@ -134,7 +136,7 @@ var config = {
 function aggiornaMessaggi () {
     let first = true;
     var singleChat = document.querySelector('#single-chat');
-    db.collection("antonio/edoardoaccivile/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
+    db.collection("users/antoniopellegrini/collocutors/chiarabaroni/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
         querySnapshot.forEach((doc) => {
             if (!document.getElementById(doc.id)) {
                 let lastMessage = document.createElement("div");
@@ -177,21 +179,32 @@ function convertToMyDate (x) {
 
 
 
-function invia () {
+function invia (collocutorx) {
     var testoMessaggio = document.querySelector('#input-keyboard')
     var date = new Date();
-    
-    db.collection("antonio/edoardoaccivile/messages").add({
+    let collocutor = "chiarabaroni"
+    var singleMsg = {
         text: document.getElementById('input-keyboard').value,
         date: date,
-        sender: "antonio"
-    })
+        sender: user
+    }
+    
+    db.collection(`users/${user}/collocutors/${collocutor}/messages`).add(singleMsg)
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
     });
+
+    db.collection(`users/${collocutor}/collocutors/${user}/messages`).add(singleMsg)
+    .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+
     testoMessaggio.value = ''    
 }
 
