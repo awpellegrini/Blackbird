@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="" type="text/css">
 
     <!-- JS -->
-    <script src="main.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-
+    <script src="js/main.js"></script>
+    
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Sarabun:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
@@ -110,7 +110,7 @@
             </div><!--fine supercontainer-->
 
             <!-- Conversation-container -->
-            <div class="conversation-container">
+            <div id="conversation-container" class="conversation-container">
                 <div class="header-single-chat">
                     <a href="javascript:history.back()" class="backbutton">
                         <!-- <img src="images/profile_pic.png" alt="user profile picture"> -->
@@ -152,69 +152,6 @@
                 <a href="index.html"><img class="close-button" src="images/ics_w.svg" alt="close button"/></a>
             </div>
         </div>
-<script src="js/main.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyATq6yp36sRF0T1PunHdMVXLYU9Y_m-mQw",
-      authDomain: "blackbird-4d2a1.firebaseapp.com",
-      databaseURL: "https://blackbird-4d2a1.firebaseio.com",
-      projectId: "blackbird-4d2a1",
-      storageBucket: "blackbird-4d2a1.appspot.com",
-      messagingSenderId: "818782685612"
-    };
-    firebase.initializeApp(config);
-  </script>
-
-  <script>
-  var db = firebase.firestore();
-
-  //var userRef = db.collection("users").doc('awpellegrini').collection('conversations')
-  var userRef = db.collection("antonio")
-  console.log(userRef)
-
-  var convo = userRef.doc('edoardoaccivile').collection('messages')
-  console.log(convo)
-
-  convo.get().then( data =>{
-    console.log(data.docs[0].data())
-  })
-
-// db.collection("users").doc("awpellegrini").set({
-//     name: "Antonio Pellegrini",
-//     email: 'antoniopellegrini@born2code.it',
-//     password: '123'
-// })
-
-// Create a query against the collection.
-//var query = docRef.where("state", "==", "")
-
-  // docRef.get().then(function(doc) {
-  //     if (doc.exists) {
-  //         console.log("Document data:", doc.data());
-  //     } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("No such document!");
-  //     }
-  // })
-
-
-
-
-  // docRef.get().then(function(doc) {
-  //     if (doc.exists) {
-  //         console.log("Document data:", doc.data());
-  //     } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("No such document!");
-  //     }
-  // }).catch(function(error) {
-  //     console.log("Error getting document:", error);
-  // });
-
-  </script>
 
   </body>
 </html>

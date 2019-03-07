@@ -395,13 +395,14 @@ img.dots.white {
 
 .conversation-container {
     width: auto;
-    height: auto;
     background-image: url('images/bg-orange.svg');
     display: none;
     position: relative;
     right: 0;
     background-size: cover;
     background-attachment: fixed;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .page-singlechat .conversation-container {

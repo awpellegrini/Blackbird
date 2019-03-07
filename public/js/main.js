@@ -16,9 +16,9 @@ var config = {
         
       db.collection("users").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-              console.log(doc.id, doc.data());
-              console.log(doc.data().username);
-              console.log(doc.data().hashPassword);
+            //   console.log(doc.id, doc.data());
+            //   console.log(doc.data().username);
+            //   console.log(doc.data().hashPassword);
           });
       });
 
@@ -133,31 +133,29 @@ var config = {
     
     
 
-function aggiornaMessaggi () {
-    let first = true;
+
+let first = true;
+db.collection("users/antoniopellegrini/collocutors/chiarabaroni/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
+    
     var singleChat = document.querySelector('#single-chat');
-    db.collection("users/antoniopellegrini/collocutors/chiarabaroni/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
-        querySnapshot.forEach((doc) => {
-            if (!document.getElementById(doc.id)) {
-                let lastMessage = document.createElement("div");
-                if (doc.data().sender === "antonio") {
-                    lastMessage.setAttribute('class', 'message message-sent');
-                } else  lastMessage.setAttribute('class', 'message message-received');
-            
-            lastMessage.innerHTML = `<div class="message-text" id= ${doc.id}> ${doc.data().text} </div><div class="message-time"> ${convertToMyDate(doc.data().date)}</div>`; 
-            
-            if (first) singleChat.prepend(lastMessage);
-            else singleChat.appendChild(lastMessage);                          
-            } singleChat.scrollTop += 100;
-        } 
-        ); 
+    var lastMessage
+    querySnapshot.forEach((doc) => {
+        if (!document.getElementById(doc.id)) {
+            lastMessage = document.createElement("div");
+            console.log(doc.data().text)
+            if (doc.data().sender === user) {
+                lastMessage.setAttribute('class', 'message message-sent');
+            } else  lastMessage.setAttribute('class', 'message message-received');
         
-        first = false;
-    });
-};
-
-aggiornaMessaggi();
-
+            lastMessage.innerHTML = `<div class="message-text" id= ${doc.id}> ${doc.data().text} </div><div class="message-time"> ${convertToMyDate(doc.data().date)}</div>`; 
+        
+            if (first) singleChat.prepend(lastMessage);
+            else singleChat.appendChild(lastMessage);                      
+        } 
+        document.querySelector('#conversation-container').scrollTop += 2000;      
+    }); 
+    first = false;
+});
 
 
 function convertToMyDate (x) {
@@ -179,7 +177,7 @@ function convertToMyDate (x) {
 
 
 
-function invia (collocutorx) {
+function invia () {
     var testoMessaggio = document.querySelector('#input-keyboard')
     var date = new Date();
     let collocutor = "chiarabaroni"
@@ -204,6 +202,14 @@ function invia (collocutorx) {
     .catch(function(error) {
         console.error("Error adding document: ", error);
     });
+
+    db.collection(`users/${user}/collocutors/`).doc(collocutor).update({
+        lastMsg: singleMsg
+    })
+
+    db.collection(`users/${collocutor}/collocutors/`).doc(user).update({
+        lastMsg: singleMsg
+    })
 
     testoMessaggio.value = ''    
 }
