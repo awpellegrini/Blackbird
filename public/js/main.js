@@ -36,17 +36,31 @@ var config = {
       return passwordHash;
   } 
 
-  function checkIfUserExist() {
+  function login() {
     let inputEmail = document.querySelector("#InputEmail");
     let inputPassword = document.querySelector("#InputPassword");
       var passHash = mySubmit();
       console.log(passHash)
       let trovato = 0;
+      // When the user clicks on <span> (x), close the modal
+      document.getElementsByClassName("close")[0].onclick = function() {
+        document.getElementById('myModal').style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = "none";
+            }
+        }
       db.collection("users").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-              if((inputEmail.value == doc.data().email) && (passHash == doc.data().password)) {
-                  window.location.href = "chats.html";
-                  trovato++
+              if((inputEmail.value != doc.data().email) || (passHash != doc.data().password)) {
+                document.getElementById('myModal').style.display = "flex"
+                document.getElementById('modal-text').innerHTML = '<div class="alert-title">Invalid email or password</div><div class="alert-text">Please reinsert both carefully</div>'
+                inputEmail.style.borderColor = "var(--red)"
+                inputPassword.style.borderColor = "var(--red)" 
+                trovato++
               } 
               if (inputEmail.value == '' || inputPassword == '') {
                   document.getElementById('myModal').style.display = "flex"
@@ -54,10 +68,7 @@ var config = {
               }
           });
           if (trovato == 0) {
-            document.getElementById('myModal').style.display = "flex"
-              document.getElementById('modal-text').innerHTML = '<div class="alert-title">Invalid email or password</div><div class="alert-text">Please reinsert both carefully</div>'
-              inputEmail.style.borderColor = "var(--red)"
-              inputPassword.style.borderColor = "var(--red)"
+            window.location.href = "chats.html";
           }
       });
   }
@@ -66,17 +77,7 @@ var config = {
       input.style.borderColor = "var(--light-grey)"
   }
 
-  // When the user clicks on <span> (x), close the modal
-  document.getElementsByClassName("close")[0].onclick = function() {
-    document.getElementById('myModal').style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-      if (event.target == document.getElementById('myModal')) {
-        document.getElementById('myModal').style.display = "none";
-      }
-  }
+  
 
 // var tapThreeDots = document.querySelectorAll("#message-list .tap-threedots");
 // var cardActions = document.querySelector("#card-action-tmpl > *");
@@ -124,21 +125,24 @@ var config = {
 //     contenitore.appendChild(cardActions);
 // }
 
-let first = true;
+
 
     
     
     
 
 function aggiornaMessaggi () {
+    let first = true;
     var singleChat = document.querySelector('#single-chat');
-    db.collection("convoList/singleConvo01/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
+    db.collection("antonio/edoardoaccivile/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
         querySnapshot.forEach((doc) => {
             if (!document.getElementById(doc.id)) {
-            let lastMessage = document.createElement("div");
-            lastMessage.setAttribute('class', 'user-bubble');
+                let lastMessage = document.createElement("div");
+                if (doc.data().sender === "antonio") {
+                    lastMessage.setAttribute('class', 'message message-sent');
+                } else  lastMessage.setAttribute('class', 'message message-received');
             
-            lastMessage.innerHTML = `<div id= ${doc.id}> ${doc.data().text} </div><div class="time"> ${convertToMyDate(doc.data().date)}</div>`; 
+            lastMessage.innerHTML = `<div class="message-text" id= ${doc.id}> ${doc.data().text} </div><div class="message-time"> ${convertToMyDate(doc.data().date)}</div>`; 
             
             if (first) singleChat.prepend(lastMessage);
             else singleChat.appendChild(lastMessage);                          
@@ -149,9 +153,8 @@ function aggiornaMessaggi () {
         first = false;
     });
 };
-aggiornaMessaggi();
 
-document.querySelector('#button').addEventListener("click", invia);
+aggiornaMessaggi();
 
 
 
@@ -178,10 +181,10 @@ function invia () {
     var testoMessaggio = document.querySelector('#input-keyboard')
     var date = new Date();
     
-    db.collection("convoList/singleConvo01/messages").add({
+    db.collection("antonio/edoardoaccivile/messages").add({
         text: document.getElementById('input-keyboard').value,
         date: date,
-        sender: "/users/user002"
+        sender: "antonio"
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
@@ -192,11 +195,11 @@ function invia () {
     testoMessaggio.value = ''    
 }
 
-testoMessaggio.addEventListener('keydown', function(event) {
-    if(event.which == 13 && testoMessaggio.value != '') {
-        invia()
-    }
-} )
+// testoMessaggio.addEventListener('keydown', function(event) {
+//     if(event.which == 13 && testoMessaggio.value != '') {
+//         invia()
+//     }
+// } )
 
 
 
