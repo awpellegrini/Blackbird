@@ -9,7 +9,7 @@ var config = {
   };
   firebase.initializeApp(config);
 
-  let user = "antoniopellegrini"
+  let user = "chiarabaroni"
 
       // Get a reference to the database service
       var db = firebase.firestore();
@@ -127,13 +127,6 @@ var config = {
 //     contenitore.appendChild(cardActions);
 // }
 
-
-
-    
-    
-    
-
-
 let first = true;
 db.collection("users/antoniopellegrini/collocutors/chiarabaroni/messages").orderBy("date", "desc").onSnapshot( querySnapshot => {
     
@@ -180,7 +173,7 @@ function convertToMyDate (x) {
 function invia () {
     var testoMessaggio = document.querySelector('#input-keyboard')
     var date = new Date();
-    let collocutor = "chiarabaroni"
+    let collocutor = "antoniopellegrini"
     var singleMsg = {
         text: document.getElementById('input-keyboard').value,
         date: date,
